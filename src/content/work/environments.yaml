@@ -1,0 +1,94 @@
+order: 1
+
+name: Environment management for infrastructure teams
+desc: Provision production-grade infrastructure without knowing Terraform, and keep staging and production honestly comparable.
+tone: mint
+thumb: kapstan-environment-list
+
+client: Kapstan
+discipline: Product Designer
+year: "2025"
+domain: Cloud infrastructure, DevOps
+
+title: Designing Environment Management for Infrastructure Teams
+overview: >-
+  Provision production-grade infrastructure without needing to know Terraform, while keeping
+  staging and production honestly comparable.
+role: Product Design, Full-stack Design, Systems Thinking
+
+hero:
+  img: kapstan-environment-list
+  alt: Environment list showing type, connection, region and resources
+  caption: Every environment a team runs, with the type that decides how it gets built.
+  tone: plain
+
+question: >-
+  How do you let teams provision production-grade infrastructure without needing to know
+  Terraform, while keeping staging and production honestly comparable?
+context: >-
+  Standing up a new environment meant hand-building a VPC, a Kubernetes cluster, and every
+  supporting resource from scratch. It was slow, and every environment ended up a little
+  different from the last. Teams needed staging to look enough like production to catch real
+  bugs, but cheap enough that it didn't double the cloud bill. And once a team had a working
+  environment, there was no easy way to copy it. Every new one meant setting it up manually, all
+  over again.
+
+goal: show people what a decision will do before they make it.
+
+principles:
+  - name: Type-aware provisioning
+    text: Tailor infrastructure defaults to what the environment is for.
+  - name: Visible before irreversible
+    text: Show exactly what will happen before you take an action you can't undo.
+
+solutions:
+  - name: Smart Environment Types
+    problem: >-
+      Every environment was set up the same way, no matter what it was for. Staging often ended
+      up with more resources than it needed, and production sometimes had too few.
+    headline: The type you choose decides what gets built
+    how: >-
+      When you pick Staging or Production, Kapstan changes what it builds and recommends to
+      match. Staging launches with a lighter, cheaper setup, since it doesn't need to run around
+      the clock. Production launches with a sturdier setup built to stay reliable.
+    screens:
+      - img: kapstan-new-environment-normal
+        alt: New environment form showing environment type selection
+        caption: Environment type, chosen once at setup, decides what actually gets built.
+        tone: plain
+
+  - name: One-Click Cloning
+    problem: >-
+      Once a team had a working environment, there was no safe way to copy it. Every new one
+      meant setting it up manually all over again, and staging slowly drifted away from
+      production.
+    headline: Show what a clone will build, before it builds it
+    how: >-
+      You can copy an existing environment, infrastructure and applications together, in one
+      action. Before anything gets built, you see a list of every resource and application it's
+      about to pull from the source environment.
+    screens:
+      - img: kapstan-new-environment-cloning
+        alt: Clone environment panel showing resource and application preview
+        caption: Every resource and application a clone will create, listed before it runs.
+        tone: plain
+      - img: kapstan-cloning-services
+        alt: >-
+          Services list for the new environment mid-clone, showing already-running services next
+          to the ones still being provisioned, with a progress panel tracking each one
+        caption: The same list, right after. Each resource shows its own progress until the clone catches up.
+        tone: plain
+
+impact:
+  lede: Hours of setup became one action.
+  body: >-
+    Setting up a new environment used to take hours of manual work. Now it's a single action.
+    Staging stopped drifting away from production too, since it's a clone of production instead
+    of something built and maintained manually.
+
+learning:
+  lede: The click isn't the hard part.
+  body: >-
+    Designing for infrastructure means designing for what happens after someone clicks. A clone
+    here isn't a cosmetic action. It can affect a live product. The hard part wasn't the button
+    itself. It was showing enough of what's about to happen that nobody had to guess.

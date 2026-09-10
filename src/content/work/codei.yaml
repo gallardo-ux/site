@@ -1,0 +1,185 @@
+order: 4
+
+name: Turning practice into proof
+desc: Track the role, practice for that exact job, and walk away with proof you can show a hiring manager, instead of a spreadsheet and a generic question bank.
+tone: mint
+
+client: Codei
+discipline: Lead Designer
+year: "2024"
+domain: Careers, AI
+
+title: Helping Job Seekers Turn Practice Into Proof
+overview: >-
+  Codei ties the whole job search together. Track the role, practice for that exact job, and
+  walk away with proof you can show a hiring manager, instead of a spreadsheet, a generic
+  question bank, and a score based on nothing but your word.
+role: Lead Designer
+
+hero:
+  img: applications-dashboard
+  tone: plain
+  alt: Codei applications dashboard listing tracked roles with status and question progress
+  caption: Every tracked role on one dashboard. Status on the left, practice progress on the right.
+
+question: >-
+  How do you help job seekers stay organized, practice for the exact role they want, and walk
+  away from every exercise with real proof of their skill, without making them stitch together
+  five different tools?
+context: >-
+  Job seekers were already applying to a lot of roles while trying to learn new skills on the
+  side. Applications were scattered across tabs, boards, and spreadsheets. Practice had nothing
+  to do with the actual job. And when someone finished a project, there was no way to prove it
+  was any good.
+
+goal: give every application something to do next, not just a status to check.
+
+principles:
+  - name: Capture from wherever you are
+    text: Save a job from wherever you find it, or track it directly inside Codei.
+  - name: Practice shaped like the job
+    text: GitHub-project or LeetCode-style questions, generated from real skill tags.
+  - name: Every exercise leaves you with something
+    text: A line you can put on your resume, not just a checked box.
+  - name: Real proof, not just a number
+    text: A real test run plus a written review, not just an AI's opinion.
+
+solutions:
+  - name: Track It, Wherever You Find It
+    problem: >-
+      Applications were scattered across tabs, boards, and spreadsheets. And spreadsheets die
+      within a week.
+    headline: Save a job from anywhere, and it lands on one dashboard, already organized
+    how: >-
+      You can browse and apply for jobs right inside Codei, or save one you found somewhere
+      else with a single click. Before building this, I asked people how they already kept
+      track of their job search. Most said tabs and spreadsheets. So instead of asking them to
+      learn a new system, Codei just needed to take a job from wherever they found it and drop
+      it onto one organized dashboard.
+    screens:
+      - img: applications-in-progress
+        alt: Applications list showing every tracked role with its status and question progress
+        caption: Every role you're tracking, in one list.
+        tone: plain
+      - img: track-application-flow
+        alt: >-
+          Pasting a job posting URL into the Track New Application modal, and the posting coming
+          back as a structured application with detected skills
+        caption: Paste a link, and the posting comes back as a tracked application.
+        bare: true
+        tone: bluefade
+
+  - name: Practice Built for the Role, Not a Question Bank
+    problem: >-
+      Most interview prep has nothing to do with the job someone is actually applying for.
+      There was no shortage of practice questions online, but none of them were tied to the
+      skills a specific role actually needed.
+    headline: Questions generated from that job's actual skills
+    how: >-
+      When you start practicing for a role, you choose between two kinds of questions: coding
+      problems similar to LeetCode, or a small project built the way you'd build one on the
+      job, closer to a real GitHub repository. Either way, Codei generates the questions from
+      the skills listed on that specific job posting. I originally planned a bigger system with
+      difficulty levels and streaks to track progress, but testing showed that two modes tied
+      to the real job mattered more than a big generic question bank ever did.
+    screens:
+      - img: view-application-progress
+        alt: >-
+          View Application showing the three generated questions beside the application details
+          they belong to
+        caption: The three generated questions, alongside the application they belong to.
+        tone: plain
+      - img: question-generation-flow
+        alt: >-
+          Choosing GitHub Project or LeetCode style practice, and Codei returning three questions
+          each tagged with the skills it exercises
+        caption: >-
+          Pick a practice mode, and Codei returns three questions tagged with the skills they
+          use.
+        bare: true
+        tone: bluefade
+
+  - name: Every Exercise Writes Your Resume for You
+    problem: >-
+      Even after spending hours on a practice project, most people ended up with nothing they
+      could actually use. The finished code sat in a repository nobody would ever look at, and
+      turning that work into something worth putting on a resume took more effort than most
+      people had time for.
+    headline: Resume-ready bullets, with real numbers, attached to the work
+    how: >-
+      When you finish an exercise, Codei writes a short summary of what you built and turns it
+      into resume bullet points, with real numbers pulled from your own work, like how much
+      faster your solution runs or how many test cases it passes. You can copy these straight
+      onto your resume instead of writing them yourself.
+    screens:
+      - img: question-repository-score
+        alt: >-
+          Completed question detail with a project resume points panel listing bullets with real
+          numbers, ready to paste
+        caption: The lines you could paste onto a resume today.
+        tone: plain
+
+  - name: Proof, Not Just a Grade
+    problem: >-
+      Even after finishing an exercise, most people had no real way to know if their solution
+      actually worked, or how it stacked up against what a hiring manager would expect from a
+      working engineer. A green checkmark on its own doesn't prove much.
+    headline: Real test results and a written review, not just a single AI score
+    how: >-
+      When you connect your GitHub repository, Codei runs your code against real automated
+      tests, the same way an engineer would check it before shipping. Alongside those results,
+      it writes a separate review that calls out specific strengths and weaknesses in your
+      solution. You walk away with real proof of what works, not just one number telling you
+      pass or fail.
+    screens:
+      - img: test-result-logs
+        alt: >-
+          Expanded test case showing the raw run log, including the failing assertion and the
+          pass count
+        caption: A real run, failures included. The log shows exactly which case broke and why.
+        tone: plain
+      - img: test-comments
+        alt: Expanded test case showing the written review comments alongside the same run
+        caption: The written review sits beside the run, not instead of it.
+        tone: plain
+
+flow:
+  lede: >-
+    One path from start to finish: track an application, generate its questions, work through
+    them, and get evaluated on real code. Step through it below.
+  steps:
+    - name: Track a new application
+      img: flow-track-application
+      alt: Track New Application modal reading a pasted job posting URL
+      caption: Paste the posting URL, and Codei reads it and fills in the details.
+      tone: plain
+    - name: View the application
+      img: flow-view-application
+      alt: View Application showing generated questions beside the application details
+      caption: The role, its status, and the questions generated from its skills.
+      tone: plain
+    - name: Evaluation running
+      img: flow-evaluation-running
+      alt: Submitted question showing evaluation in progress against the connected repository
+      caption: Submit a repository, and the run starts against your actual code.
+      tone: plain
+    - name: Test case results
+      img: flow-evaluation-completed
+      alt: >-
+        Completed evaluation showing the overall score, the passing test run log, and every test
+        case marked complete
+      caption: The finished run. An overall score, the log behind it, and every case accounted for.
+      tone: plain
+
+impact:
+  lede: Codei turned a passive job search into an active one.
+  body: >-
+    Users left every session with something to show for it: a practice repo, a resume line, or
+    a scored submission, instead of just an updated tracker.
+
+learning:
+  lede: Proof works better than a promise.
+  body: >-
+    The feedback only felt trustworthy once it came with real proof, actual test results, not
+    just an AI opinion. That combination is what turned it from a nice feature into the reason
+    people stuck around.

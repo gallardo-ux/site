@@ -1,0 +1,116 @@
+order: 2
+
+name: The application lifecycle, end to end
+desc: Configure, deploy and watch every application from one place, instead of bouncing between YAML files, a CI/CD tool and three different dashboards.
+tone: violet
+thumb: kapstan-deploy-overview
+
+client: Kapstan
+discipline: Product Designer
+year: "2025"
+domain: Developer tools, CI/CD
+
+title: Designing the Application Lifecycle, End to End
+overview: >-
+  Configure, deploy, and watch every application without leaving Kapstan. One surface for the
+  workflow developers use every day, instead of three separate tools.
+role: Product Design, Workflow Design, Front-end (React/TS), Design System
+
+hero:
+  img: kapstan-deploy-overview
+  alt: Kapstan deployment overview
+  caption: Deployment state, history, and logs, all on one screen.
+  tone: plain
+
+question: >-
+  How do you give developers one place to ship from, without requiring Kubernetes expertise at
+  every step?
+context: >-
+  Shipping and running an application on Kubernetes usually means jumping between several tools:
+  hand-written YAML for configuration, a separate CI/CD tool for deploys, and another dashboard
+  (or three) for logs and metrics. Every switch costs time and invites mistakes. And teams
+  without deep Kubernetes knowledge found even simple tasks hard to get right.
+
+goal: put everything developers need in one place, instead of three separate tools.
+
+principles:
+  - name: No YAML by default
+    text: A simple interface sits on top of the manifests most teams still write by hand.
+  - name: One view, every signal
+    text: Deploys, metrics, logs, and history live in the same place.
+
+solutions:
+  - name: Configure Without YAML
+    problem: >-
+      Environment variables, secrets, resource limits, and ports all lived in manifest files
+      that people edited by hand. One typo away from a bad deploy.
+    headline: A UI layer over Kubernetes manifests
+    how: >-
+      You can adjust your service's configuration settings without writing any YAML by hand.
+    screens:
+      - img: kapstan-service-application-config
+        alt: Configure tab showing environment variables
+        caption: >-
+          Secrets stay masked by default. Scaling, hardware, networking, volume and storage all
+          sit in the same rail.
+        tone: plain
+
+  - name: Deploy on Push
+    problem: >-
+      Hitting deploy used to mean pushing a new version and hoping nothing broke. There was no
+      easy way to see what was actually changing before it went live.
+    headline: Every deploy opens with a clear overview of what's changing
+    how: >-
+      Once you hit deploy, Kapstan opens an overview of the new version before it goes live. It
+      lays out exactly what's changing, like the version, environment variables, networking, and
+      scaling settings for that service, so you can review everything and confirm before
+      anything ships.
+    screens:
+      - img: kapstan-deploy-overview-diff-drawer
+        alt: Deployment overview drawer with configuration diff
+        caption: Every changed value, grouped by concern, shown before anything ships.
+        tone: plain
+
+  - name: Monitor Without Leaving
+    problem: >-
+      Figuring out what went wrong with a release meant piecing together logs, metrics, and a
+      separate APM tool by hand.
+    headline: Real-time metrics, logs, and APM, with nothing else to set up
+    how: >-
+      Every application gets real-time metrics and centralized logs, plus built-in APM that
+      tracks API response times.
+    screens:
+      - img: kapstan-service-application-monitoring
+        alt: Monitor tab showing pods, CPU and memory
+        caption: Pod health above, CPU and memory below, same time window.
+        tone: plain
+      - img: kapstan-service-application-logs
+        alt: Logs tab showing a centralized log stream
+        caption: One keyword search across the service. No query language to learn.
+        tone: plain
+
+  - name: Deployment History
+    problem: Debugging a bad release always started with "wait, what changed?"
+    headline: A record of who deployed what, and when
+    how: Every past deploy keeps its own logs, so debugging never starts from zero.
+    screens:
+      - img: kapstan-deployment-history-table
+        alt: History table showing event, version, deployed by, status and logs
+        caption: Event, version, author, status, and the logs from that exact deploy.
+        bare: true
+        tone: bluefade
+
+impact:
+  lede: Shipped more often, with more confidence.
+  body: >-
+    Teams using this workflow started shipping more often and with more confidence, since
+    deploys and their outcomes were visible in one place instead of scattered across tools.
+    Fixing issues got noticeably faster once logs, metrics, and deploy history all lived in the
+    same view.
+
+learning:
+  lede: Good tools stay out of the way.
+  body: >-
+    Developers touch this surface every single day. The goal was never to impress anyone. It was
+    to get out of the way: the fastest path from writing code to seeing it run safely in
+    production. Most of the work was deciding what to leave out until someone actually needed it.

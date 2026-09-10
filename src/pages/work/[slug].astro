@@ -1,0 +1,371 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Shot from '../../components/Shot.astro';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+  return all.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const p = entry.data;
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** One pastel per section, in order. `ink` is the text colour on that pastel. */
+const accents = [
+  { bar: 'var(--color-cs-mint)', ink: '#20261f' },
+  { bar: 'var(--color-cs-blue)', ink: '#1f2429' },
+  { bar: 'var(--color-cs-violet)', ink: '#252029' },
+  { bar: 'var(--color-cs-peach)', ink: '#2a2520' },
+];
+
+/** Stage tone per section, matching the accent above. */
+const toneNames = ['mint', 'blue', 'violet', 'peach'] as const;
+
+const panelRail =
+  'linear-gradient(90deg,var(--color-cs-mint) 0%,var(--color-cs-blue) 50%,var(--color-cs-peach) 100%)';
+
+const facts = [
+  { term: 'Client', value: p.client },
+  { term: 'Scope', value: p.role },
+  { term: 'Year', value: p.year },
+  { term: 'Domain', value: p.domain },
+];
+---
+
+<Base
+  title={`${p.name} · Jose Gallardo`}
+  description={p.overview}
+  section="work"
+  surface="paper"
+  showFooter={false}
+>
+  <div class="mx-auto w-full max-w-[1800px] px-6 lg:px-12">
+    <!-- Same shell as the homepage: the page scrolls normally, and at lg+ the
+         scope column is sticky so only the case study body moves. -->
+    <div class="grid items-start gap-12 text-cs-ink lg:grid-cols-[28%_1fr] lg:gap-20">
+      <!-- Scope -->
+      <aside class="py-12 lg:sticky lg:top-16 lg:py-16">
+        <a
+          href="/#work"
+          class="cs-kicker group inline-flex items-center gap-2 transition-colors hover:text-cs-ink"
+        >
+          <span class="transition-transform group-hover:-translate-x-0.5">&larr;</span> Back to work
+        </a>
+
+        <h1
+          class="m-0 mt-7 text-balance text-[clamp(30px,3.2vw,46px)] font-medium leading-[1.02] tracking-[-0.04em]"
+        >
+          {p.title}
+        </h1>
+
+        <p class="mt-7 text-pretty text-[16px] leading-[1.6] tracking-[-0.01em] text-cs-lead">
+          {p.overview}
+        </p>
+
+        <dl class="mt-8 flex flex-col gap-4 border-t border-cs-rule pt-6">
+          {
+            facts.map((f) => (
+              <div class="grid grid-cols-[70px_1fr] gap-4">
+                <dt class="cs-kicker leading-[1.7]">{f.term}</dt>
+                <dd class="m-0 text-[14px] leading-[1.6] text-[#4a4a46]">{f.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        {
+          p.liveUrl && (
+            <a
+              class="cs-kicker mt-7 inline-flex items-center gap-1.5 transition-colors hover:text-cs-ink"
+              href={p.liveUrl}
+              target="_blank"
+              rel="noopener"
+            >
+              View the live product <span aria-hidden="true">&#8599;</span>
+            </a>
+          )
+        }
+      </aside>
+
+      <!-- Case study body -->
+      <article class="pb-16 lg:py-16">
+        {/* 1. Hero */}
+        <Shot {...p.hero} tone={p.hero.tone ?? 'mix'} />
+
+        {/* 2. Challenge */}
+        <section class="pt-20 md:pt-28">
+          <div class="flex gap-5">
+            <div class="w-1 flex-none bg-cs-coral"></div>
+            <div>
+              <span class="cs-kicker">Challenge</span>
+              <h2
+                class="m-0 mt-5 text-pretty text-[clamp(26px,3vw,36px)] font-medium leading-[1.14] tracking-[-0.03em]"
+              >
+                {p.question}
+              </h2>
+            </div>
+          </div>
+          <p
+            class="m-0 mt-7 text-pretty text-[clamp(16px,1.3vw,17px)] leading-[1.68] text-cs-body"
+          >
+            {p.context}
+          </p>
+        </section>
+
+        {/* 3. Design response */}
+        <section class="pt-16 md:pt-22">
+          <div class="bg-cs-panel pb-11 text-cs-panel-ink">
+            <div class="h-1.5" style={`background:${panelRail}`}></div>
+            <div class="px-6 pt-10 md:px-12">
+              <span class="cs-kicker text-cs-panel-meta">Design response</span>
+              <h3
+                class="m-0 mt-4.5 text-[clamp(22px,2.4vw,30px)] font-medium leading-[1.2] tracking-[-0.028em]"
+              >
+                Goal: {p.goal}
+              </h3>
+              <div class="mt-9 grid gap-8 md:grid-cols-2 md:gap-10">
+                {
+                  p.principles.map((pr, i) => (
+                    <div class="border-t-2 pt-4.5" style={`border-color:${accents[i].bar}`}>
+                      <p class="m-0 text-[16px] font-semibold leading-[1.4]">{pr.name}</p>
+                      <p class="m-0 mt-2.5 text-[15px] leading-[1.6] text-cs-panel-mute">
+                        {pr.text}
+                      </p>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. Numbered solutions */}
+        {
+          p.solutions.map((s, i) => {
+            const a = accents[i % accents.length];
+            return (
+              <section class="pt-24 md:pt-32">
+                <div class="grid gap-6 md:grid-cols-[96px_1fr] md:gap-12">
+                  <div class="flex flex-row items-center gap-4 md:flex-col md:items-stretch md:gap-3.5">
+                    <div class="h-1 w-16 md:w-full" style={`background:${a.bar}`} />
+                    <span class="text-[clamp(40px,4.4vw,56px)] font-medium leading-[0.8] tracking-[-0.05em] text-cs-ink">
+                      {pad(i + 1)}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h2 class="m-0 text-[clamp(26px,3.2vw,38px)] font-medium leading-[1.1] tracking-[-0.032em]">
+                      {s.name}
+                    </h2>
+                    <p class="m-0 mt-5 text-pretty text-[clamp(16px,1.5vw,18px)] leading-[1.6] text-cs-soft">
+                      {s.problem}
+                    </p>
+
+                    <div class="mt-8">
+                      <div
+                        class="cs-kicker inline-block rounded-t-lg px-3.5 py-2.5"
+                        style={`background:${a.bar};color:${a.ink}`}
+                      >
+                        Design solution
+                      </div>
+                      <div
+                        class="rounded-b-[14px] rounded-tr-[14px] border bg-white px-6 pb-9 pt-7 md:px-9"
+                        style={`border-color:${a.bar}`}
+                      >
+                        <p class="m-0 text-[clamp(19px,2vw,24px)] font-medium leading-[1.28] tracking-[-0.025em]">
+                          {s.headline}
+                        </p>
+                        <p class="m-0 mt-3 text-[16px] leading-[1.65] text-cs-body">
+                          {s.how}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-10 grid gap-7 md:ml-[144px] md:mt-13">
+                  {s.screens.map((sc, j) => (
+                    <Shot
+                      {...sc}
+                      tone={sc.tone ?? (j === 0 ? toneNames[i % toneNames.length] : 'grey')}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })
+        }
+
+        {/* 5. End-to-end walkthrough (optional) */}
+        {
+          p.flow && (
+            <section class="pt-24 md:pt-32">
+              <span class="cs-kicker">End to end</span>
+              <h2 class="m-0 mt-5 text-[clamp(26px,3.2vw,38px)] font-medium leading-[1.1] tracking-[-0.032em]">
+                From Application to Evaluation
+              </h2>
+              <p class="m-0 mt-5 text-pretty text-[clamp(16px,1.5vw,18px)] leading-[1.6] text-cs-soft">
+                {p.flow.lede}
+              </p>
+
+              {/* Radio-driven stepper: one screen at a time, no JS needed. */}
+              <div class="flow mt-10">
+                {p.flow.steps.map((st, i) => (
+                  <input
+                    class="flow-radio"
+                    type="radio"
+                    name="cs-flow"
+                    id={`cs-flow-${i}`}
+                    checked={i === 0}
+                  />
+                ))}
+
+                <div class="flow-tabs" role="tablist" aria-label="From application to evaluation">
+                  {p.flow.steps.map((st, i) => (
+                    <label
+                      class="flow-tab"
+                      for={`cs-flow-${i}`}
+                      style={`--accent:${accents[i % accents.length].bar}`}
+                    >
+                      <span class="flow-rule" />
+                      <span class="cs-kicker flow-num">Step {pad(i + 1)}</span>
+                      <span class="flow-name">{st.name}</span>
+                    </label>
+                  ))}
+                </div>
+
+                <div class="flow-panels">
+                  {p.flow.steps.map((st, i) => (
+                    <div class="flow-panel">
+                      <Shot
+                        img={st.img}
+                        alt={st.alt}
+                        caption={st.caption}
+                        tone={st.tone ?? toneNames[i % toneNames.length]}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )
+        }
+
+        {/* 6. Impact and learning */}
+        <section class="pt-28 md:pt-35">
+          <div class="flex flex-col gap-5">
+            <div
+              class="grid items-start gap-8 rounded-2xl bg-cs-panel px-7 pb-13 pt-12 text-cs-panel-ink md:grid-cols-[280px_1fr] md:gap-12 md:px-12"
+            >
+              <div class="flex flex-col gap-4.5">
+                <span class="cs-kicker text-cs-mint">Impacts</span>
+                <h3
+                  class="m-0 text-pretty text-[clamp(24px,2.8vw,32px)] font-medium leading-[1.14] tracking-[-0.032em]"
+                >
+                  {p.impact.lede}
+                </h3>
+              </div>
+              <p
+                class="m-0 text-pretty text-[clamp(16px,1.3vw,17px)] leading-[1.72] text-cs-panel-mute"
+              >
+                {p.impact.body}
+              </p>
+            </div>
+
+            <div
+              class="grid items-start gap-8 rounded-2xl border border-cs-rule bg-cs-mist px-7 pb-13 pt-12 md:grid-cols-[280px_1fr] md:gap-12 md:px-12"
+            >
+              <div class="flex flex-col gap-4.5">
+                <span class="cs-kicker">Learnings</span>
+                <h3
+                  class="m-0 text-pretty text-[clamp(24px,2.8vw,32px)] font-medium leading-[1.14] tracking-[-0.032em]"
+                >
+                  {p.learning.lede}
+                </h3>
+              </div>
+              <p class="m-0 text-pretty text-[clamp(16px,1.3vw,17px)] leading-[1.72] text-cs-body">
+                {p.learning.body}
+              </p>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</Base>
+
+<style>
+  /* The radios are the state; labels are the controls. Keeping them in the DOM
+     (rather than hiding with display:none) preserves keyboard arrow-key
+     navigation through the group. */
+  .flow-radio {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .flow-tabs {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+  .flow-tab {
+    --on: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 14px;
+    cursor: pointer;
+    opacity: calc(0.45 + 0.55 * var(--on));
+    transition: opacity 0.2s ease;
+  }
+  .flow-tab:hover {
+    opacity: calc(0.7 + 0.3 * var(--on));
+  }
+  .flow-rule {
+    height: 3px;
+    border-radius: 999px;
+    background: var(--accent);
+    transform: scaleX(calc(0.35 + 0.65 * var(--on)));
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .flow-name {
+    font-size: clamp(15px, 1.5vw, 17px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--color-cs-ink);
+    text-wrap: pretty;
+  }
+  .flow-radio:focus-visible ~ .flow-tabs .flow-tab {
+    outline: 2px solid var(--color-link);
+    outline-offset: 4px;
+  }
+
+  .flow-panels {
+    margin-top: 28px;
+  }
+  .flow-panel {
+    display: none;
+  }
+  .flow-radio:nth-of-type(1):checked ~ .flow-panels .flow-panel:nth-child(1) { display: block; }
+  .flow-radio:nth-of-type(1):checked ~ .flow-tabs .flow-tab:nth-child(1) { --on: 1; }
+  .flow-radio:nth-of-type(2):checked ~ .flow-panels .flow-panel:nth-child(2) { display: block; }
+  .flow-radio:nth-of-type(2):checked ~ .flow-tabs .flow-tab:nth-child(2) { --on: 1; }
+  .flow-radio:nth-of-type(3):checked ~ .flow-panels .flow-panel:nth-child(3) { display: block; }
+  .flow-radio:nth-of-type(3):checked ~ .flow-tabs .flow-tab:nth-child(3) { --on: 1; }
+  .flow-radio:nth-of-type(4):checked ~ .flow-panels .flow-panel:nth-child(4) { display: block; }
+  .flow-radio:nth-of-type(4):checked ~ .flow-tabs .flow-tab:nth-child(4) { --on: 1; }
+  .flow-radio:nth-of-type(5):checked ~ .flow-panels .flow-panel:nth-child(5) { display: block; }
+  .flow-radio:nth-of-type(5):checked ~ .flow-tabs .flow-tab:nth-child(5) { --on: 1; }
+  .flow-radio:nth-of-type(6):checked ~ .flow-panels .flow-panel:nth-child(6) { display: block; }
+  .flow-radio:nth-of-type(6):checked ~ .flow-tabs .flow-tab:nth-child(6) { --on: 1; }
+</style>

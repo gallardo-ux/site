@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import { screen } from '../lib/screens';
+
+export type Tone =
+  | 'mix'
+  | 'mint'
+  | 'blue'
+  | 'violet'
+  | 'peach'
+  | 'grey'
+  | 'plain'
+  | 'bluefade';
+
+interface Props {
+  img: string;
+  alt: string;
+  caption?: string;
+  /** Pixel rectangle in the source image, to emphasise one region of a wider shot. */
+  crop?: { x: number; y: number; w: number; h: number };
+  /** Stage colour behind the screenshot. */
+  tone?: Tone;
+  /**
+   * Composites that already carry their own cards (and a transparent
+   * background) sit straight on the stage — a white plate behind them would
+   * just double the framing.
+   */
+  bare?: boolean;
+}
+
+const { img, alt, caption, crop, tone = 'grey', bare = false } = Astro.props;
+
+const src = screen(img);
+
+/**
+ * Scale the source so the crop rectangle exactly fills the window. Percentage
+ * margins resolve against the container's *width*, so both offsets divide by
+ * crop.w. `max-width:none` is required: Tailwind's preflight caps images at
+ * 100%, which would otherwise clamp the upscale and leave the window uncovered.
+ */
+const pct = (n: number) => `${(n * 100).toFixed(4)}%`;
+const cropStyle = crop
+  ? [
+      'display:block',
+      'height:auto',
+      'max-width:none',
+      `width:${pct(src.width / crop.w)}`,
+      `margin-left:${pct(-crop.x / crop.w)}`,
+      `margin-top:${pct(-crop.y / crop.w)}`,
+    ].join(';')
+  : '';
+---
+
+<figure class="m-0">
+  <div class:list={['cs-stage', `cs-stage-${tone}`]}>
+    <div class:list={[!bare && 'cs-shot']}>
+      {
+        crop ? (
+          <div class="overflow-hidden" style={`aspect-ratio:${crop.w}/${crop.h}`}>
+            <Image src={src} alt={alt} loading="lazy" style={cropStyle} />
+          </div>
+        ) : (
+          <Image src={src} alt={alt} loading="lazy" class="block h-auto w-full" />
+        )
+      }
+    </div>
+  </div>
+</figure>

@@ -1,0 +1,91 @@
+order: 3
+
+name: Cloud cost, before the bill arrives
+desc: A surprise cloud bill became a real-time breakdown teams can act on, down to the specific resource driving the spend.
+tone: peach
+thumb: kapstan-env-level-resources-cost
+
+client: Kapstan
+discipline: Product Designer
+year: "2025"
+domain: FinOps, cloud billing
+
+title: Making Cloud Cost Visible, Before the Bill Arrives
+overview: >-
+  Turning a surprise cloud bill into a real-time breakdown teams can actually act on, down to
+  the specific resource driving the spend.
+role: Product Design, Data Visualization, Information Architecture
+
+hero:
+  img: kapstan-env-level-resources-cost
+  alt: Environment-level cost broken down by resource
+  caption: Spend broken down to the resource driving it, shown in real time instead of at billing time.
+  tone: plain
+
+question: How do you make cloud cost part of the normal workflow, instead of a monthly surprise?
+context: >-
+  Cloud costs are usually invisible until the bill shows up. By then, an oversized database, an
+  idle instance, or a bad deploy has already cost real money for weeks. Most teams can't see
+  which resource is actually driving their spend, so cost control happens after the fact instead
+  of as part of the normal workflow.
+
+goal: trace every dollar back to the specific resource spending it.
+
+principles:
+  - name: Cost at every level
+    text: See environment, resource, and application cost from the same view.
+  - name: Built into the decision
+    text: Cost guidance appears while you're setting things up, before it turns into a surprise
+      on the bill.
+
+solutions:
+  - name: Cost Explorer, at Every Level
+    problem: >-
+      Teams could see a total bill, but not which resource or application was actually
+      responsible for it.
+    headline: A clear line from "this is costing money" to "this is why, and where"
+    how: >-
+      Cost breaks down by environment, resource, and application, and you can drill from one
+      level into the next.
+    screens:
+      - img: kapstan-env-level-applications-cost
+        alt: Environment-level cost broken down by application
+        caption: Spend by application, so a total always points to something specific.
+        tone: plain
+      - img: kapstan-service-application-level-cost
+        alt: Application-level cost broken down by resource within one service
+        caption: One more level down. The resources inside a single application.
+        tone: plain
+
+  - name: Cost-Optimized Recommendations
+    problem: >-
+      Cost decisions got made once at setup and never looked at again. That's usually the exact
+      moment the biggest waste gets locked in.
+    headline: Cost guidance shows up at the moment you're deciding
+    how: >-
+      Suggestions show up while you're setting up an environment. They steer staging toward
+      cheaper configs and production toward the settings it actually needs.
+    screens:
+      - img: kapstan-cost-recommendations
+        alt: >-
+          Cache and scaling configuration panels, each showing a Recommended label next to the
+          suggested memory size, autoscaling toggle, and CPU and memory utilization targets
+        caption: >-
+          The same idea, one field at a time. Every setting that affects cost carries its own
+          recommendation, tuned to the environment it's in.
+        bare: true
+        tone: bluefade
+
+impact:
+  lede: Cost became something people could see every day.
+  body: >-
+    Teams got an ongoing view of what was actually driving their cloud spend, instead of finding
+    out at the end of the month. Cost management stopped being a monthly surprise and became
+    something people could see and act on every day.
+
+learning:
+  lede: Charting the data was the easy part.
+  body: >-
+    Cost dashboards are easy to build and hard to make people trust. Charting the data was never
+    the hard part. Making sure every number could be traced back to a real, specific resource
+    was, since that's what let someone actually act on it instead of just looking at it.

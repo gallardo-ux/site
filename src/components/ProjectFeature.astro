@@ -1,0 +1,211 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CardArt from './CardArt.astro';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const p = entry.data;
+
+/**
+ * Panel wash and ink, transcribed per card from the Claude Design files.
+ * Each card's ink is tuned to its own wash, so they aren't interchangeable.
+ */
+type Skin = { wash: string; client: string; title: string; blurb: string; minH?: number };
+
+const skins: Record<string, Skin> = {
+  'application-lifecycle': {
+    wash: 'linear-gradient(120deg,oklch(0.95 0.035 165) 0%,oklch(0.91 0.05 195) 55%,oklch(0.88 0.06 235) 100%)',
+    client: '#22322c',
+    title: '#0d1a15',
+    blurb: '#2c3b35',
+  },
+  'cloud-cost': {
+    wash: 'linear-gradient(120deg,oklch(0.95 0.03 155) 0%,oklch(0.93 0.045 300) 58%,oklch(0.94 0.05 45) 100%)',
+    client: '#2b2436',
+    title: '#160f1d',
+    blurb: '#342c40',
+  },
+  codei: {
+    wash: 'linear-gradient(120deg,oklch(0.95 0.035 150) 0%,oklch(0.92 0.05 168) 55%,oklch(0.90 0.05 196) 100%)',
+    client: '#22322c',
+    title: '#0d1a15',
+    blurb: '#2c3b35',
+  },
+  environments: {
+    wash: 'linear-gradient(120deg,oklch(0.95 0.035 160) 0%,oklch(0.92 0.05 230) 55%,oklch(0.90 0.06 285) 100%)',
+    client: '#22322c',
+    title: '#0d1a15',
+    blurb: '#2c3b35',
+  },
+};
+
+const skin = skins[entry.id] ?? skins['application-lifecycle'];
+---
+
+<a class="pf" href={`/work/${entry.id}/`} aria-label={`Read the ${p.title} case study`}>
+  <div class="pf-shell">
+    <div class="pf-panel" style={`background:${skin.wash};--minh:${skin.minH ?? 520}`}>
+      <div class="pf-copy">
+        <div class="pf-brand">
+          <span class="pf-badge">{p.client.charAt(0)}</span>
+          <span class="pf-client" style={`color:${skin.client}`}>{p.client}</span>
+        </div>
+        <h3 class="pf-title" style={`color:${skin.title}`}>{p.title}</h3>
+        <p class="pf-blurb" style={`color:${skin.blurb}`}>{p.overview}</p>
+        <span class="pf-gap"></span>
+        <span class="pf-cta">Read case study <span aria-hidden="true">&rarr;</span></span>
+      </div>
+
+      <div class="pf-art">
+        <CardArt id={entry.id} />
+      </div>
+    </div>
+  </div>
+</a>
+
+<style>
+  /* Authored at the design's 1120px and scaled with container units, so the
+     whole composition holds together at any width. */
+  .pf {
+    container-type: inline-size;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .pf-shell {
+    --u: calc(100cqw / 1120);
+    background: #1c1c1a;
+    border-radius: calc(28 * var(--u));
+    padding: calc(40 * var(--u));
+  }
+  .pf-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: calc(22 * var(--u));
+    display: grid;
+    grid-template-columns: calc(440 * var(--u)) 1fr;
+    min-height: calc(var(--minh, 520) * var(--u));
+  }
+
+  .pf-copy {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    padding: calc(44 * var(--u)) 0 calc(44 * var(--u)) calc(44 * var(--u));
+  }
+  .pf-brand {
+    display: flex;
+    align-items: center;
+    gap: calc(10 * var(--u));
+  }
+  .pf-badge {
+    display: grid;
+    place-items: center;
+    width: calc(28 * var(--u));
+    height: calc(28 * var(--u));
+    border-radius: calc(8 * var(--u));
+    background: #0a0a0a;
+    color: #fff;
+    font-size: calc(13 * var(--u));
+    font-weight: 600;
+  }
+  .pf-client {
+    font-size: calc(13 * var(--u));
+    font-weight: 500;
+  }
+  .pf-title {
+    margin: calc(26 * var(--u)) 0 0;
+    max-width: 14ch;
+    font-size: calc(38 * var(--u));
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+  }
+  .pf-blurb {
+    margin: calc(16 * var(--u)) 0 0;
+    max-width: 38ch;
+    font-size: calc(15 * var(--u));
+    line-height: 1.62;
+    text-wrap: pretty;
+  }
+  .pf-gap {
+    flex: 1;
+    min-height: calc(30 * var(--u));
+  }
+  .pf-cta {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: calc(9 * var(--u));
+    background: #0a0a0a;
+    color: #fff;
+    border-radius: 999px;
+    padding: calc(12 * var(--u)) calc(20 * var(--u));
+    font-size: calc(13 * var(--u));
+    font-weight: 500;
+    white-space: nowrap;
+    transition: transform 0.25s ease;
+  }
+  .pf:hover .pf-cta {
+    transform: translateX(calc(3 * var(--u)));
+  }
+
+  .pf-art {
+    position: relative;
+  }
+
+  /* Below the design's comfortable width the scaled type gets too small, so
+     the card stacks and returns to real font sizes. */
+  @container (max-width: 720px) {
+    .pf-shell {
+      padding: 14px;
+      border-radius: 20px;
+    }
+    .pf-panel {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      border-radius: 14px;
+    }
+    .pf-copy {
+      padding: 26px 24px 24px;
+    }
+    .pf-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      font-size: 12px;
+    }
+    .pf-brand {
+      gap: 9px;
+    }
+    .pf-client {
+      font-size: 13px;
+    }
+    .pf-title {
+      margin-top: 18px;
+      max-width: 18ch;
+      font-size: 26px;
+    }
+    .pf-blurb {
+      margin-top: 12px;
+      max-width: none;
+      font-size: 14px;
+    }
+    .pf-gap {
+      min-height: 20px;
+    }
+    .pf-cta {
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+    .pf-art {
+      padding: 0 0 22px 24px;
+    }
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectFeature from '../components/ProjectFeature.astro';
+
+const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+
+const experience = [
+  {
+    role: 'Product Designer / Software Engineer',
+    company: 'Kapstan · Full-time',
+    years: 'Nov 2022 to Jun 2025',
+    current: false,
+  },
+  {
+    role: 'Product Designer',
+    company: 'Codei · Contract',
+    years: 'May 2024 to Jul 2024',
+    current: false,
+  },
+  {
+    role: 'Product Designer / Front-end Engineer',
+    company: 'super{set} · Internship',
+    years: 'May 2022 to Nov 2022',
+    current: false,
+  },
+  {
+    role: 'Web Designer',
+    company: 'Digital NEST Inc',
+    years: 'Aug 2020 to May 2022',
+    current: false,
+  },
+];
+---
+
+<Base title="Jose Gallardo, Product Designer" section="home" showFooter={false}>
+  <div class="mx-auto w-full max-w-[1800px] px-6 lg:px-12">
+    <!-- Two-column shell: the page scrolls normally, so the only scrollbar is
+         the browser's own at the viewport edge. At lg+ the sidebar is sticky and
+         pinned under the header, so it never scrolls and only the work column
+         moves. -->
+    <div class="grid items-start gap-12 lg:grid-cols-[28%_1fr] lg:gap-20">
+      <!-- Sidebar -->
+      <aside id="about" class="py-12 lg:sticky lg:top-16 lg:py-16">
+        <h1 class="t-display-xl">
+          Product designer who creates meaningful experiences through thoughtful design.
+        </h1>
+
+        <p class="t-body-lg mt-6 text-body">
+          Previously I led design at <span class="text-ink">Codei</span> and was the founding
+          designer and engineer at <span class="text-ink">Kapstan</span>.
+        </p>
+
+        <section class="mt-10 border-t border-hairline pt-6">
+          <h2 class="t-eyebrow">Work experience</h2>
+          <ul class="mt-4">
+            {
+              experience.map((job) => (
+                <li class="flex items-start justify-between gap-4 border-b border-hairline py-3 last:border-0">
+                  <span>
+                    <span class="t-label-sm flex items-center gap-2">
+                      {job.current && (
+                        <span class="size-1.5 rounded-full bg-link" aria-label="Current role" />
+                      )}
+                      {job.role}
+                    </span>
+                    <span class="t-body-md mt-0.5 block text-mute">{job.company}</span>
+                  </span>
+                  <span class="t-eyebrow flex-none pt-0.5">{job.years}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <!-- LinkedIn reads as a plain text link, not a button. -->
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <a
+            class="t-label-sm text-body underline-offset-4 transition-colors hover:text-ink hover:underline"
+            href="https://www.linkedin.com/in/josegdesign/"
+            target="_blank"
+            rel="noopener">LinkedIn</a
+          >
+        </div>
+      </aside>
+
+      <!-- Work grid: scrolls with the document -->
+      <div id="work" class="pb-16 lg:py-16">
+        <div class="pb-6">
+          <h2 class="t-eyebrow">Case studies</h2>
+        </div>
+        <!-- Large feature cards, stacked. The two-up ProjectCard grid is still
+             in ProjectCard.astro if we want the compact tiles back. -->
+        <div class="flex flex-col gap-8">
+          {projects.map((entry) => <ProjectFeature entry={entry} />)}
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import { screen } from '../lib/screens';
+import type { Tone } from './Shot.astro';
+
+interface Props {
+  /** Pastel bed behind the screenshot — same vocabulary as the case-study stages. */
+  tone: Tone;
+  screens: { img: string; alt: string }[];
+  class?: string;
+}
+
+const { tone, screens, class: extra = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative grid aspect-[4/3] place-items-center overflow-hidden p-6 sm:p-8',
+    `cs-stage-${tone}`,
+    extra,
+  ]}
+>
+  {
+    screens.map((s) => (
+      <figure class="mock relative z-10 w-full overflow-hidden rounded-[10px] bg-white">
+        <Image
+          src={screen(s.img)}
+          alt={s.alt}
+          widths={[480, 720, 1080]}
+          sizes="(max-width: 900px) 92vw, 40vw"
+          loading="lazy"
+          class="block h-auto w-full"
+        />
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  /* Level 2 — floating: layered low-alpha stack, never a single heavy drop. */
+  .mock {
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 0.05),
+      0 10px 20px -6px rgb(0 0 0 / 0.14),
+      0 24px 40px -20px rgb(0 0 0 / 0.3);
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+</style>

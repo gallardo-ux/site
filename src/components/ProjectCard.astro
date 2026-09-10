@@ -1,0 +1,35 @@
+---
+import Stage from './Stage.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const p = entry.data;
+---
+
+<a href={`/work/${entry.id}/`} class="card group block overflow-hidden card-hairline">
+  <Stage
+    tone={p.tone}
+    screens={[{ img: p.thumb, alt: `${p.name} product screen` }]}
+  />
+  <div class="border-t border-hairline p-6">
+    <h3 class="t-heading-md">{p.name}</h3>
+    <p class="t-body-md mt-2 text-body">{p.desc}</p>
+    <p class="t-eyebrow mt-4">{p.client} · {p.year}</p>
+  </div>
+</a>
+
+<style>
+  .card {
+    transition: box-shadow 0.25s ease;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-floating);
+  }
+  .card:hover :global(.mock) {
+    transform: translateY(-6px);
+  }
+</style>

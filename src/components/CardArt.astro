@@ -1,0 +1,104 @@
+---
+/**
+ * The screenshot shown inside a project card. Each case study gets its own
+ * dedicated screen mockup, separate from the case-study body images.
+ */
+import { Image } from 'astro:assets';
+import { screen } from '../lib/screens';
+
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+
+const shots: Record<string, { key: string; alt: string; tint: 'green' | 'plum' }> = {
+  'application-lifecycle': {
+    key: 'kapstan-card-lifecycle',
+    alt: 'Kapstan application deployment overview',
+    tint: 'green',
+  },
+  'cloud-cost': {
+    key: 'kapstan-card-cost',
+    alt: 'Kapstan cloud cost breakdown',
+    tint: 'plum',
+  },
+  environments: {
+    key: 'kapstan-card-environments',
+    alt: 'Kapstan environment configuration form',
+    tint: 'green',
+  },
+  codei: {
+    key: 'codei-card',
+    alt: 'Codei application dashboard',
+    tint: 'green',
+  },
+};
+
+const shot = shots[id];
+---
+
+{
+  shot && (
+    <div class:list={['art', shot.tint === 'plum' && 'art-plum']}>
+      <div class="main">
+        <div class="win">
+          <Image src={screen(shot.key)} alt={shot.alt} class="shot" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .art {
+    position: relative;
+    height: 100%;
+    /* Shadow tint, per card family. */
+    --tint: 12 30 24;
+  }
+  .art-plum {
+    --tint: 22 15 29;
+  }
+
+  .main {
+    position: absolute;
+    left: calc(40 * var(--u));
+    top: calc(48 * var(--u));
+    right: calc(-40 * var(--u));
+    bottom: calc(-40 * var(--u));
+    box-sizing: border-box;
+    border-radius: calc(14 * var(--u)) 0 0 0;
+    box-shadow: 0 calc(40 * var(--u)) calc(80 * var(--u)) calc(-34 * var(--u)) rgb(var(--tint) / 0.5);
+  }
+  .win {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: calc(14 * var(--u)) 0 0 0;
+  }
+  .shot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* Stacked card: drop the absolute positioning and show the full screenshot. */
+  @container (max-width: 720px) {
+    .main {
+      position: relative;
+      inset: auto;
+      border-radius: 12px 0 0 0;
+      box-shadow: 0 20px 40px -18px rgb(var(--tint) / 0.45);
+    }
+    .win {
+      height: auto;
+      border-radius: 12px 0 0 0;
+    }
+    .shot {
+      height: auto;
+      object-fit: unset;
+    }
+  }
+</style>
