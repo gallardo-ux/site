@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import CardArt from './CardArt.astro';
+import { screen } from '../lib/screens';
 
 interface Props {
   entry: CollectionEntry<'work'>;
@@ -43,6 +44,15 @@ const skins: Record<string, Skin> = {
 };
 
 const skin = skins[entry.id] ?? skins['application-lifecycle'];
+
+/**
+ * The supplied lockups have opposite polarity — Kapstan's is white, Codei's is
+ * dark green — so neither works on every panel as-is. Masking them means only
+ * the alpha is used and each one takes its own card's ink colour, which also
+ * matches how the client name was coloured before.
+ */
+const logoKey = entry.id === 'codei' ? 'logo-codei' : 'logo-kapstan';
+const logo = screen(logoKey);
 ---
 
 <a class="pf" href={`/work/${entry.id}/`} aria-label={`Read the ${p.title} case study`}>
@@ -50,8 +60,12 @@ const skin = skins[entry.id] ?? skins['application-lifecycle'];
     <div class="pf-panel" style={`background:${skin.wash};--minh:${skin.minH ?? 520}`}>
       <div class="pf-copy">
         <div class="pf-brand">
-          <span class="pf-badge">{p.client.charAt(0)}</span>
-          <span class="pf-client" style={`color:${skin.client}`}>{p.client}</span>
+          <span
+            class="pf-logo"
+            role="img"
+            aria-label={p.client}
+            style={`--logo:url('${logo.src}');--logo-ar:${logo.width}/${logo.height};background:${skin.client}`}
+          ></span>
         </div>
         <h3 class="pf-title" style={`color:${skin.title}`}>{p.title}</h3>
         <p class="pf-blurb" style={`color:${skin.blurb}`}>{p.overview}</p>
@@ -102,20 +116,19 @@ const skin = skins[entry.id] ?? skins['application-lifecycle'];
     align-items: center;
     gap: calc(10 * var(--u));
   }
-  .pf-badge {
-    display: grid;
-    place-items: center;
-    width: calc(28 * var(--u));
-    height: calc(28 * var(--u));
-    border-radius: calc(8 * var(--u));
-    background: #0a0a0a;
-    color: #fff;
-    font-size: calc(13 * var(--u));
-    font-weight: 600;
-  }
-  .pf-client {
-    font-size: calc(13 * var(--u));
-    font-weight: 500;
+  /* Only the lockup's alpha is used; `background` supplies the colour. */
+  .pf-logo {
+    display: block;
+    height: calc(26 * var(--u));
+    aspect-ratio: var(--logo-ar);
+    -webkit-mask-image: var(--logo);
+    mask-image: var(--logo);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: left center;
+    mask-position: left center;
   }
   .pf-title {
     margin: calc(26 * var(--u)) 0 0;
@@ -173,17 +186,11 @@ const skin = skins[entry.id] ?? skins['application-lifecycle'];
     .pf-copy {
       padding: 26px 24px 24px;
     }
-    .pf-badge {
-      width: 26px;
-      height: 26px;
-      border-radius: 7px;
-      font-size: 12px;
+    .pf-logo {
+      height: 24px;
     }
     .pf-brand {
       gap: 9px;
-    }
-    .pf-client {
-      font-size: 13px;
     }
     .pf-title {
       margin-top: 18px;
