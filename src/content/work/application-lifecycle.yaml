@@ -31,6 +31,40 @@ context: >-
   (or three) for logs and metrics. Every switch costs time and invites mistakes. And teams
   without deep Kubernetes knowledge found even simple tasks hard to get right.
 
+process:
+  lede: >-
+    Shipping on Kubernetes was spread across three tools. Most of the work was
+    deciding how much of it belonged on one screen, and what to leave out.
+  discover:
+    lede: Follow one deploy from start to finish.
+    text: >-
+      Shipping an application meant hand-written YAML for configuration, a
+      separate CI/CD tool for the deploy, and another dashboard or three for logs
+      and metrics. Every switch cost time and invited mistakes, and teams without
+      deep Kubernetes knowledge found even simple tasks hard to get right.
+  define:
+    lede: One place to ship from, no Kubernetes expertise required.
+    text: >-
+      The problem was not any single tool, it was the gaps between them.
+      Configuration, deploy, and monitoring had to sit in one continuous
+      workflow. Two rules followed: no YAML by default, and every signal about a
+      service in the same view.
+  develop:
+    lede: Put the review before the deploy.
+    text: >-
+      The risky moment was hitting deploy and hoping nothing broke, so the deploy
+      became a reviewable step: an overview of the new version with every changed
+      value grouped by what it affects, shown before anything ships. Monitoring
+      followed the same logic, keeping metrics, logs, and history where the
+      deploy happened instead of in another tool.
+  deliver:
+    lede: Shipped more often, with more confidence.
+    text: >-
+      Configuration, deploys, metrics, logs, and history ended up on one surface,
+      so a deploy and its outcome are visible in the same place. Debugging a bad
+      release starts with the deploy that caused it rather than a hunt across
+      three dashboards.
+
 goal: put everything developers need in one place, instead of three separate tools.
 
 principles:

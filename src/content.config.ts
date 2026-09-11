@@ -16,6 +16,12 @@ const crop = z.object({
 /** Stage colour behind a screenshot. Omit to inherit the section's accent. */
 const tone = z.enum(['mix', 'mint', 'blue', 'violet', 'peach', 'grey', 'plain', 'bluefade']);
 
+/** One phase of the Double Diamond: a short claim, then the detail behind it. */
+const phase = z.object({
+  lede: z.string(),
+  text: z.string(),
+});
+
 const screen = z.object({
   img: z.string(),
   alt: z.string(),
@@ -70,6 +76,21 @@ const work = defineCollection({
       )
       .min(2)
       .max(4),
+
+    /**
+     * Optional Double Diamond write-up, shown between the challenge and the
+     * design response. The four phases are fixed keys rather than an array so
+     * a case study can't accidentally ship a three-sided diamond.
+     */
+    process: z
+      .object({
+        lede: z.string().optional(),
+        discover: phase,
+        define: phase,
+        develop: phase,
+        deliver: phase,
+      })
+      .optional(),
 
     /** Optional end-to-end walkthrough, shown after the numbered solutions. */
     flow: z

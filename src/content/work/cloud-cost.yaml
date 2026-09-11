@@ -29,6 +29,40 @@ context: >-
   which resource is actually driving their spend, so cost control happens after the fact instead
   of as part of the normal workflow.
 
+process:
+  lede: >-
+    The ask was a cost dashboard. The harder problem was making the numbers
+    specific enough to act on.
+  discover:
+    lede: Cost only shows up after the money is spent.
+    text: >-
+      Teams saw their cloud spend once a month, on the bill. By then an oversized
+      database, an idle instance, or a bad deploy had already been costing real
+      money for weeks, and nothing in the bill said which resource was
+      responsible for it.
+  define:
+    lede: Trace every dollar back to the resource spending it.
+    text: >-
+      A total nobody can act on is just an alarm. The number had to lead
+      somewhere specific, and it had to show up early enough to do something
+      about it. Two rules followed: cost visible at every level, and cost
+      guidance built into setup rather than into a monthly review.
+  develop:
+    lede: Let the number lead somewhere.
+    text: >-
+      Rather than one dashboard of totals, cost breaks down by environment,
+      resource, and application. Each level explains the one above it.
+
+      Recommendations went the other way. Instead of a report to read later, cost
+      guidance sits on the individual setting that drives it, right when someone
+      is choosing.
+  deliver:
+    lede: Cost became something people could see every day.
+    text: >-
+      Spend is visible in real time, down to the resource driving it, and
+      suggestions steer staging toward cheaper configs while production keeps the
+      settings it actually needs. Cost stopped being a monthly surprise.
+
 goal: trace every dollar back to the specific resource spending it.
 
 principles:

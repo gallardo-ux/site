@@ -1,0 +1,120 @@
+---
+/**
+ * The Double Diamond: the diagram up top, then a card per phase underneath.
+ *
+ * The diagram is a raster with its labels baked in, so the cards below carry
+ * the accessible naming of each phase and the diagram is decorative weight
+ * only. It ships on a white ground; `mix-blend-mode: multiply` drops that to
+ * the page's own off-white instead of stamping a white box onto it.
+ */
+import { Image } from 'astro:assets';
+import doubleDiamond from '../assets/double-diamond.webp';
+
+interface Phase {
+  lede: string;
+  text: string;
+}
+
+/**
+ * A phase's text may carry more than one paragraph. In the YAML these are
+ * separated by a blank line, which a folded scalar (`>-`) hands us as a single
+ * newline — every other line break inside a paragraph is already folded to a
+ * space, so any newline left standing is a paragraph break.
+ */
+const paragraphs = (text: string) =>
+  text
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+interface Props {
+  lede?: string;
+  discover: Phase;
+  define: Phase;
+  develop: Phase;
+  deliver: Phase;
+}
+
+const { lede, discover, define, develop, deliver } = Astro.props;
+
+/**
+ * The four phases in order. These used to each carry one of the pastel
+ * accents, tying a card to its half of the hand-drawn diamond above. The
+ * diagram now brings its own colour, so the cards drop theirs and share a
+ * single ink rule instead of competing with it.
+ */
+const phases = [
+  { key: 'Discover', ...discover },
+  { key: 'Define', ...define },
+  { key: 'Develop', ...develop },
+  { key: 'Deliver', ...deliver },
+];
+---
+
+<section class="pt-16 md:pt-22">
+  <span class="cs-kicker">Process</span>
+  <h2
+    class="m-0 mt-5 text-[clamp(26px,3.2vw,38px)] font-medium leading-[1.1] tracking-[-0.032em]"
+  >
+    Double Diamond
+  </h2>
+  {
+    lede && (
+      <p class="m-0 mt-5 text-pretty text-[clamp(16px,1.5vw,18px)] leading-[1.6] text-cs-soft">
+        {lede}
+      </p>
+    )
+  }
+
+  <div class="dd mt-10">
+    <Image
+      src={doubleDiamond}
+      alt="The Double Diamond, running from problem to solution: Discover and Define form the first diamond, exploring then focusing, and Develop and Deliver form the second."
+      loading="lazy"
+    />
+  </div>
+
+  <ol class="dd-grid mt-8">
+    {
+      phases.map((p, i) => (
+        <li class="dd-card">
+          <div class="h-1 w-full bg-cs-ink" />
+          <div class="mt-4 flex items-baseline gap-2.5">
+            <span class="text-[13px] font-medium tabular-nums text-cs-meta">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="m-0 text-[17px] font-medium leading-[1.3] tracking-[-0.02em]">{p.key}</h3>
+          </div>
+          <p class="m-0 mt-3 text-pretty text-[15px] font-medium leading-[1.45] tracking-[-0.015em]">
+            {p.lede}
+          </p>
+          {paragraphs(p.text).map((para) => (
+            <p class="m-0 mt-2.5 text-pretty text-[14.5px] leading-[1.62] text-cs-body">{para}</p>
+          ))}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .dd :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* The diagram carries its own white ground. Multiply drops it to the
+       page's off-white so no white box shows through underneath. */
+    mix-blend-mode: multiply;
+  }
+
+  /* Keyed to the column's own width, not the viewport: the case-study body is
+     only ~70% of the page, so a viewport breakpoint fires far too early. */
+  .dd-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  }
+</style>
