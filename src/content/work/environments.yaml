@@ -33,6 +33,38 @@ context: >-
   environment, there was no easy way to copy it. Every new one meant setting it up manually, all
   over again.
 
+process:
+  lede: >-
+    The ask was faster provisioning. The actual problem was that nobody could see
+    what provisioning would do until it had already happened.
+  discover:
+    lede: Every environment was hand-built, and every one came out different.
+    text: >-
+      Standing up an environment meant assembling a VPC, a Kubernetes cluster, and
+      every supporting resource by hand. It was slow and it drifted. Teams wanted
+      staging close enough to production to catch real bugs, without doubling the
+      cloud bill to get it.
+  define:
+    lede: Show people what a decision will do before they make it.
+    text: >-
+      The common thread was not speed, it was blindness. Teams were committing to
+      infrastructure they could not see beforehand. Two rules followed: defaults
+      should match what an environment is for, and anything irreversible should
+      be visible first.
+  develop:
+    lede: Let the environment type carry the decisions.
+    text: >-
+      Rather than adding more knobs, the type does the work. Picking Staging or
+      Production changes what gets built and recommended. Cloning went the same
+      way: copy a working environment exactly as it is, with a preview of every
+      resource it is about to create.
+  deliver:
+    lede: Hours of setup became one action.
+    text: >-
+      Provisioning dropped from a morning of manual work to a single reviewable
+      step, and staging stopped falling out of sync with production because it
+      is now a clone of it rather than something maintained by hand.
+
 goal: show people what a decision will do before they make it.
 
 principles:

@@ -32,13 +32,47 @@ context: >-
   to do with the actual job. And when someone finished a project, there was no way to prove it
   was any good.
 
+process:
+  lede: >-
+    Codei began as a tracker and ended as a loop. Most of the work was deciding
+    which parts of that loop people would actually use.
+  discover:
+    lede: Ask how people already work.
+    text: >-
+      I asked job seekers how they tracked applications. Almost everyone said
+      browser tabs and a spreadsheet. The same conversations surfaced two more
+      gaps: practice had nothing to do with the roles they wanted, and finished
+      projects had nothing to prove they were any good.
+  define:
+    lede: Every application needs a next action, not a status.
+    text: >-
+      Three scattered complaints turned out to be one problem. A status tells you
+      where an application sits but never what to do about it. That set the scope:
+      tracking, practice, and proof had to feed into each other, instead of sitting
+      side by side as three separate tools.
+  develop:
+    lede: Fewer questions, closer to the real job.
+    text: >-
+      My first plan was a big question bank with difficulty levels and streaks.
+      Testing changed that. People did not want more questions, they wanted
+      questions that matched the job they were applying for. So the bank became two
+      modes generated from a real posting: a LeetCode style problem or a
+      GitHub style project.
+  deliver:
+    lede: Proof, not a promise.
+    text: >-
+      The final version works in four steps: save a job from anywhere, generate
+      questions from that posting's skills, submit real code, then get a real test
+      run back beside a written review. Every session ends with something you can
+      show a hiring manager.
+
 goal: give every application something to do next, not just a status to check.
 
 principles:
   - name: Capture from wherever you are
     text: Save a job from wherever you find it, or track it directly inside Codei.
   - name: Practice shaped like the job
-    text: GitHub-project or LeetCode-style questions, generated from real skill tags.
+    text: GitHub project or LeetCode style questions, generated from real skill tags.
   - name: Every exercise leaves you with something
     text: A line you can put on your resume, not just a checked box.
   - name: Real proof, not just a number
