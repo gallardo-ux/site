@@ -1,12 +1,14 @@
 ---
+import { Image } from 'astro:assets';
 import '@fontsource-variable/geist';
 import '../styles/global.css';
+import { screen } from '../lib/screens';
 
 interface Props {
   title: string;
   description?: string;
   /** Highlights the matching nav item. */
-  section?: 'home' | 'work';
+  section?: 'home' | 'work' | 'about';
   /** Case-study pages use a full-height two-column layout and hide the footer. */
   showFooter?: boolean;
   /** 'paper' is the white case-study surface; 'canvas' is the default off-white. */
@@ -31,6 +33,10 @@ const paper = surface === 'paper';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
   </head>
   <body class:list={['min-h-screen', paper ? 'bg-white' : 'bg-canvas']}>
@@ -42,10 +48,11 @@ const paper = surface === 'paper';
     >
       <div class="mx-auto flex h-16 w-full max-w-[1800px] items-center gap-6 px-6 lg:px-12">
         <a href="/" class="flex flex-none items-center gap-2.5">
-          <span
-            class="grid size-7 place-items-center rounded-full bg-ink text-[11px] font-semibold text-white"
-            >JG</span
-          >
+          <!-- The monogram is two-tone (white G, grey J), so it reads against
+               the dark plate. Mark height matches the favicon's proportions. -->
+          <span class="grid size-10 place-items-center rounded-full bg-ink">
+            <Image src={screen('logo-jg')} alt="" class="h-6 w-auto" />
+          </span>
           <span class="t-label-sm">Jose Gallardo</span>
         </a>
 
@@ -63,6 +70,13 @@ const paper = surface === 'paper';
               'rounded-full px-3 py-2 t-body-md transition-colors hover:text-ink',
               section === 'work' ? 'text-ink' : 'text-body',
             ]}>Work</a
+          >
+          <a
+            href="/about"
+            class:list={[
+              'rounded-full px-3 py-2 t-body-md transition-colors hover:text-ink',
+              section === 'about' ? 'text-ink' : 'text-body',
+            ]}>About</a
           >
         </nav>
 
