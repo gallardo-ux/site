@@ -6,14 +6,18 @@ import Process from '../../components/Process.astro';
 
 export async function getStaticPaths() {
   const all = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-  return all.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  return all.map((entry, index) => ({
+    params: { slug: entry.id },
+    props: { entry, nextEntry: all[(index + 1) % all.length] },
+  }));
 }
 
 interface Props {
   entry: CollectionEntry<'work'>;
+  nextEntry: CollectionEntry<'work'>;
 }
 
-const { entry } = Astro.props;
+const { entry, nextEntry } = Astro.props;
 const p = entry.data;
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -32,9 +36,8 @@ const panelRail =
   'linear-gradient(90deg,var(--color-cs-mint) 0%,var(--color-cs-blue) 50%,var(--color-cs-peach) 100%)';
 
 const facts = [
-  { term: 'Client', value: p.client },
-  { term: 'Scope', value: p.role },
-  { term: 'Year', value: p.year },
+  { term: 'Company', value: p.client },
+  { term: 'Role', value: p.role },
   { term: 'Domain', value: p.domain },
 ];
 ---
@@ -46,11 +49,11 @@ const facts = [
   surface="paper"
   showFooter={false}
 >
-  <div class="mx-auto w-full max-w-[1800px] px-6 lg:px-12">
+  <div id="top" class="mx-auto w-full max-w-[1800px] px-6 lg:px-12">
     <!-- Same shell as the homepage: the page scrolls normally, and at lg+ the
-         scope column is sticky so only the case study body moves. -->
+         overview column is sticky so only the case study body moves. -->
     <div class="grid items-start gap-12 text-cs-ink lg:grid-cols-[28%_1fr] lg:gap-20">
-      <!-- Scope -->
+      <!-- Overview -->
       <aside class="py-12 lg:sticky lg:top-16 lg:py-16">
         <a
           href="/#work"
@@ -72,7 +75,7 @@ const facts = [
         <dl class="mt-8 flex flex-col gap-4 border-t border-cs-rule pt-6">
           {
             facts.map((f) => (
-              <div class="grid grid-cols-[70px_1fr] gap-4">
+              <div class="grid grid-cols-[70px_1fr] items-baseline gap-4">
                 <dt class="cs-kicker leading-[1.7]">{f.term}</dt>
                 <dd class="m-0 text-[14px] leading-[1.6] text-[#4a4a46]">{f.value}</dd>
               </div>
@@ -297,6 +300,33 @@ const facts = [
                 {p.learning.body}
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* 7. Continue to the next case study or return to the top. */}
+        <section class="mt-24 border-t border-cs-rule pt-8 md:mt-32">
+          <div class="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="m-0 text-[14px] font-semibold leading-[1.4] text-cs-ink">
+                Read the next case study
+              </p>
+              <a
+                href={`/work/${nextEntry.id}/`}
+                class="group mt-3 inline-flex max-w-[620px] items-center gap-3 text-balance text-[clamp(24px,3vw,36px)] font-medium leading-[1.14] tracking-[-0.03em] text-cs-ink"
+              >
+                {nextEntry.data.name}
+                <span class="transition-transform group-hover:translate-x-1" aria-hidden="true"
+                  >&rarr;</span
+                >
+              </a>
+            </div>
+
+            <a
+              href="#top"
+              class="cs-kicker inline-flex flex-none items-center gap-2 transition-colors hover:text-cs-ink"
+            >
+              Back to top <span aria-hidden="true">&uarr;</span>
+            </a>
           </div>
         </section>
       </article>

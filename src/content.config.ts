@@ -55,6 +55,7 @@ const work = defineCollection({
     /** Case study head */
     title: z.string(),
     overview: z.string(),
+    /** One-sentence description displayed in the Role fact. */
     role: z.string(),
     liveUrl: z.string().optional(),
 
