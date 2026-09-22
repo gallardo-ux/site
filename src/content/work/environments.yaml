@@ -14,7 +14,7 @@ title: Designing Environment Management for Infrastructure Teams
 overview: >-
   Provision production-grade infrastructure without needing to know Terraform, while keeping
   staging and production honestly comparable.
-role: Product Design, Full-stack Design, Systems Thinking
+role: Designed the flows and interfaces for creating and cloning cloud environments and built the front end.
 
 hero:
   img: kapstan-environment-list

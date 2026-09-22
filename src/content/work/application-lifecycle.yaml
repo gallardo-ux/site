@@ -14,7 +14,7 @@ title: Designing the Application Lifecycle, End to End
 overview: >-
   Configure, deploy, and watch every application without leaving Kapstan. One surface for the
   workflow developers use every day, instead of three separate tools.
-role: Product Design, Workflow Design, Front-end (React/TS), Design System
+role: Designed how users set up, deploy, and monitor their apps, and helped build some of the screens.
 
 hero:
   img: kapstan-deploy-overview
