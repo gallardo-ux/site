@@ -93,6 +93,15 @@ const work = defineCollection({
       })
       .optional(),
 
+    /** The user evidence behind one consequential choice and its observed or delivered result. */
+    decisionResult: z
+      .object({
+        decision: z.string(),
+        evidence: z.string(),
+        result: z.string(),
+      })
+      .optional(),
+
     /** Optional end-to-end walkthrough, shown after the numbered solutions. */
     flow: z
       .object({
@@ -113,7 +122,7 @@ const work = defineCollection({
       .optional(),
 
     /** Closing pair — a short lede and the paragraph behind it. */
-    impact: z.object({ lede: z.string(), body: z.string() }),
+    impact: z.object({ label: z.string().optional(), lede: z.string(), body: z.string() }),
     learning: z.object({ lede: z.string(), body: z.string() }),
   }),
 });

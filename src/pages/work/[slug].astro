@@ -125,6 +125,31 @@ const facts = [
         {/* 2b. How the work was run (optional) */}
         {p.process && <Process {...p.process} />}
 
+        {/* 2c. A consequential choice, the evidence behind it, and the outcome. */}
+        {
+          p.decisionResult && (
+            <section class="pt-16 md:pt-22">
+              <h2 class="cs-kicker m-0">Decision and result</h2>
+              <div class="mt-5 grid gap-6 border-t border-cs-rule pt-7 md:grid-cols-3 md:gap-8">
+                {(
+                  [
+                    { label: 'Decision', text: p.decisionResult.decision },
+                    { label: 'Evidence', text: p.decisionResult.evidence },
+                    { label: 'Result', text: p.decisionResult.result },
+                  ] as const
+                ).map((item, i) => (
+                  <div class="border-l-[3px] pl-5" style={`border-color:${accents[i].bar}`}>
+                    <h3 class="m-0 text-[16px] font-semibold leading-[1.4]">{item.label}</h3>
+                    <p class="m-0 mt-3 text-pretty text-[15px] leading-[1.65] text-cs-body">
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
         {/* 3. Design response */}
         <section class="pt-16 md:pt-22">
           <div class="bg-cs-panel pb-11 text-cs-panel-ink">
@@ -271,7 +296,7 @@ const facts = [
               class="grid items-start gap-8 rounded-2xl bg-cs-panel px-7 pb-13 pt-12 text-cs-panel-ink md:grid-cols-[280px_1fr] md:gap-12 md:px-12"
             >
               <div class="flex flex-col gap-4.5">
-                <span class="cs-kicker text-cs-mint">Impacts</span>
+                <span class="cs-kicker text-cs-mint">{p.impact.label ?? 'Impacts'}</span>
                 <h3
                   class="m-0 text-pretty text-[clamp(24px,2.8vw,32px)] font-medium leading-[1.14] tracking-[-0.032em]"
                 >
