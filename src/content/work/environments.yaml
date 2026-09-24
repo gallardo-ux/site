@@ -63,7 +63,7 @@ process:
     text: >-
       Teams can clone an existing environment instead of rebuilding its resources and
       applications separately. A preview lists what the clone will create, giving
-      teams a production-like starting point they can
+      teams a production like starting point they can
       inspect before provisioning begins.
 
 decisionResult:
@@ -125,7 +125,7 @@ solutions:
         tone: plain
 
 impact:
-  lede: A production-like staging environment without rebuilding it by hand.
+  lede: A production like staging environment without rebuilding it by hand.
   body: >-
     Cloning carries the source environment's infrastructure and applications into a new
     staging environment. Teams no longer need to configure the VPC, cluster, and supporting

@@ -76,8 +76,8 @@ decisionResult:
     a saved role. The planned bank sorted generic questions by difficulty and
     rewarded streaks, but did not connect practice to the skills in that posting.
   result: >-
-    The final flow gives each saved role three skill-tagged questions in either
-    coding-problem or small-project mode. A submitted repository then receives a
+    The final flow gives each saved role three skill tagged questions in either a
+    coding problem or small project. A submitted repository then receives a
     real test run and written review.
 
 goal: give every application something to do next, not just a status to check.
