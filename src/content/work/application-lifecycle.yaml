@@ -52,18 +52,31 @@ process:
   develop:
     lede: Put the review before the deploy.
     text: >-
-      The risky moment was hitting deploy and hoping nothing broke, so the deploy
-      became a reviewable step: an overview of the new version with every changed
-      value grouped by what it affects, shown before anything ships. Monitoring
-      followed the same logic, keeping metrics, logs, and history where the
-      deploy happened instead of in another tool.
+      The risky moment was hitting deploy and hoping nothing broke. I chose to
+      add a review step rather than make the deploy button the fastest possible
+      path: an overview of the new version with every changed value grouped by
+      what it affects, shown before anything ships. Monitoring followed the same
+      logic, keeping metrics, logs, and history where the deploy happened instead
+      of in another tool.
   deliver:
-    lede: Shipped more often, with more confidence.
+    lede: The deployment task took 33% less time in Kapstan.
     text: >-
       Configuration, deploys, metrics, logs, and history ended up on one surface,
-      so a deploy and its outcome are visible in the same place. Debugging a bad
-      release starts with the deploy that caused it rather than a hunt across
-      three dashboards.
+      so a deploy and its outcome are visible in the same place. Comparing users'
+      existing deployment flow with the Kapstan flow, the same task took 33% less
+      time in Kapstan. Debugging a bad release starts with the deploy that caused
+      it rather than a hunt across three dashboards.
+
+decisionResult:
+  decision: >-
+    Add a review step that shows every changed setting before a deploy goes live.
+  evidence: >-
+    Developers had to piece together configuration, deploy status, logs, and metrics
+    across separate tools to understand what changed and whether a release worked.
+  result: >-
+    In a comparison with users' existing deployment flow, the Kapstan flow took
+    33% less time to complete the deployment task, even with the review step.
+    The deploy and its health signals are visible in the same place.
 
 goal: put everything developers need in one place, instead of three separate tools.
 
@@ -135,12 +148,12 @@ solutions:
         tone: bluefade
 
 impact:
-  lede: Shipped more often, with more confidence.
+  lede: 33% less time to complete a deployment task.
   body: >-
-    Teams using this workflow started shipping more often and with more confidence, since
-    deploys and their outcomes were visible in one place instead of scattered across tools.
-    Fixing issues got noticeably faster once logs, metrics, and deploy history all lived in the
-    same view.
+    We compared the time users spent completing their existing deployment flow with the
+    Kapstan flow for the same task. The Kapstan flow took 33% less time. The review step
+    made changes visible before release, while logs, metrics, and deploy history gave
+    teams one place to check the outcome and investigate a bad release.
 
 learning:
   lede: Good tools stay out of the way.

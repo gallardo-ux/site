@@ -54,17 +54,31 @@ process:
     lede: Fewer questions, closer to the real job.
     text: >-
       My first plan was a big question bank with difficulty levels and streaks.
-      Testing changed that. People did not want more questions, they wanted
-      questions that matched the job they were applying for. So the bank became two
-      modes generated from a real posting: a LeetCode style problem or a
-      GitHub style project.
+      Testing showed a mismatch: the bank organized practice by difficulty and
+      streaks, while job seekers were trying to decide what to practice for a
+      specific role. They wanted questions matched to that job's skills. I cut the
+      bank and designed two modes generated from the posting: a LeetCode style
+      problem or a GitHub style project.
   deliver:
     lede: Proof, not a promise.
     text: >-
-      The final version works in four steps: save a job from anywhere, generate
-      questions from that posting's skills, submit real code, then get a real test
-      run back beside a written review. Every session ends with something you can
-      show a hiring manager.
+      The final design follows four steps: save a job from anywhere, generate
+      questions from that posting's skills, submit real code, then see a test run
+      beside a written review. Each exercise is designed to leave someone with
+      work they can show a hiring manager.
+
+decisionResult:
+  decision: >-
+    Replace the planned question bank, difficulty levels, and streaks with two
+    practice modes generated from a specific job posting.
+  evidence: >-
+    In testing, the decision job seekers needed to make was what to practice for
+    a saved role. The planned bank sorted generic questions by difficulty and
+    rewarded streaks, but did not connect practice to the skills in that posting.
+  result: >-
+    The final flow gives each saved role three skill tagged questions in either a
+    coding problem or small project. A submitted repository then receives a
+    real test run and written review.
 
 goal: give every application something to do next, not just a status to check.
 
@@ -206,14 +220,16 @@ flow:
       tone: plain
 
 impact:
-  lede: Codei turned a passive job search into an active one.
+  label: Design outcome
+  lede: A path from each application to relevant practice and proof.
   body: >-
-    Users left every session with something to show for it: a practice repo, a resume line, or
-    a scored submission, instead of just an updated tracker.
+    The final design connects a tracked role to questions based on its skills, a submitted
+    repository, and test results that show what worked. It gives job seekers a path from
+    organizing applications to producing work they can discuss with a hiring manager.
 
 learning:
   lede: Proof works better than a promise.
   body: >-
-    The feedback only felt trustworthy once it came with real proof, actual test results, not
-    just an AI opinion. That combination is what turned it from a nice feature into the reason
-    people stuck around.
+    A single AI score could not explain whether a solution actually worked. Showing test
+    results beside a written review made the feedback specific enough for job seekers to
+    inspect and use.

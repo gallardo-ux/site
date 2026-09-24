@@ -59,11 +59,24 @@ process:
       way: copy a working environment exactly as it is, with a preview of every
       resource it is about to create.
   deliver:
-    lede: Hours of setup became one action.
+    lede: Staging starts from production, with the full build visible first.
     text: >-
-      Provisioning dropped from a morning of manual work to a single reviewable
-      step, and staging stopped falling out of sync with production because it
-      is now a clone of it rather than something maintained by hand.
+      Teams can clone an existing environment instead of rebuilding its resources and
+      applications separately. A preview lists what the clone will create, giving
+      teams a production like starting point they can
+      inspect before provisioning begins.
+
+decisionResult:
+  decision: >-
+    Make environment type set the defaults, and show the full resource list before
+    a clone begins provisioning.
+  evidence: >-
+    Manually built environments drifted apart, while teams needed staging to resemble
+    production without carrying the same cloud cost.
+  result: >-
+    A staging environment can start from a production clone, including its
+    infrastructure and applications. Teams review the resources before creation
+    instead of rebuilding them separately.
 
 goal: show people what a decision will do before they make it.
 
@@ -112,11 +125,12 @@ solutions:
         tone: plain
 
 impact:
-  lede: Hours of setup became one action.
+  lede: A production like staging environment without rebuilding it by hand.
   body: >-
-    Setting up a new environment used to take hours of manual work. Now it's a single action.
-    Staging stopped drifting away from production too, since it's a clone of production instead
-    of something built and maintained manually.
+    Cloning carries the source environment's infrastructure and applications into a new
+    staging environment. Teams no longer need to configure the VPC, cluster, and supporting
+    resources separately for each copy. Starting from the same configuration removes a source
+    of staging drift, while the preview lets teams review every resource before it is created.
 
 learning:
   lede: The click isn't the hard part.
